@@ -9,7 +9,7 @@ const app = express();
 
 const initializeServer = (port) => {
   const server = app.listen(port, () => {
-    debug(chalk.blue(`Atención. Escuchando en el puerto ${port}`));
+    debug(chalk.blue(`Atención. Se está escuchando en el puerto ${port}`));
   });
 
   server.on("error", (error) => {
