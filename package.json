@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index",
     "start-dev": "nodemon -q",
-    "test": "jest --watchAll --collect-coverage"
+    "test": "jest --watchAll --collect-coverage",
+    "main": "index.js"
   },
   "keywords": [],
   "author": "",
