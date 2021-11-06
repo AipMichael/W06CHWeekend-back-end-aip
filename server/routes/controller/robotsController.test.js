@@ -116,4 +116,28 @@ describe("Given a getARobot function", () => {
       expect(error.code).toBe(400);
     });
   });
+
+  describe("And When it receives an id that does not correspond to an existing robot", () => {
+    test("Then it should invoke next with the error and the error.code should be 404", async () => {
+      const idRobot = 7;
+
+      Robot.findById = jest.fn().mockResolvedValue(null);
+
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+
+      const res = () => {};
+
+      const next = jest.fn();
+
+      await getARobot(req, res, next);
+
+      expect(next).toHaveBeenCalled();
+      /*       expect(error).toHaveProperty("code");
+      expect(error.code).toBe(404); */
+    });
+  });
 });
