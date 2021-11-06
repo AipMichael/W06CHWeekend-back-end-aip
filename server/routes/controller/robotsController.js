@@ -10,7 +10,7 @@ const getARobot = async (req, res, next) => {
   try {
     const searchedRobot = await Robot.findById(idRobot); // test: receives a req.id + res + next.
     if (searchedRobot) {
-      res.json(searchedRobot); // test to be called
+      res.json(searchedRobot); // test to be called: receives a req + res with .json + next.
     } else {
       const error = new Error("Error. Peligro. Robot no encontrado."); // test
       error.code = 404;
