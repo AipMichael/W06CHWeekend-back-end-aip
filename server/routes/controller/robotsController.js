@@ -8,13 +8,13 @@ const getRobots = async (req, res) => {
 const getARobot = async (req, res, next) => {
   const { idRobot } = req.params;
   try {
-    const searchedRobot = await Robot.findById(idRobot); // test
+    const searchedRobot = await Robot.findById(idRobot); // test: receives a req.id + res + next.
     if (searchedRobot) {
       res.json(searchedRobot); // test to be called
     } else {
-      const error = new Error("Error. Peligro. Robot no encontrado."); // no test: the thrown error goes to catch
+      const error = new Error("Error. Peligro. Robot no encontrado."); // test
       error.code = 404;
-      throw error;
+      next(error);
     }
   } catch (error) {
     // test

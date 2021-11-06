@@ -1,9 +1,9 @@
 /* const { restart } = require("nodemon"); */
-const { getRobots } = require("./robotsController");
+const { getRobots, getARobot } = require("./robotsController");
 const Robot = require("../../../database/models/robot");
 
 describe("Given a getRobots function", () => {
-  describe("When it receives a res object, and imports a given Robot model", () => {
+  describe("When it receives a res object, and inherits a given Robot model", () => {
     test("Then it should invoke the res's method json", async () => {
       const robots = [
         {
@@ -39,6 +39,25 @@ describe("Given a getRobots function", () => {
 
       expect(Robot.find).toHaveBeenCalled();
       expect(res.json).toHaveBeenCalledWith(robots);
+    });
+  });
+});
+
+describe("Given a getARobot function", () => {
+  describe("When it receives a request with an id of 7, a res object, a next function and inherits a given Robot model", () => {
+    test("Then it should invoke Robot.findById with the id 7", async () => {
+      Robot.findById = jest.fn().mockResolvedValue({});
+      const id = 7;
+      const req = {
+        params: {
+          id,
+        },
+      };
+      const res = {
+        json: () => {},
+      };
+      const next = () => {};
+      await getARobot(req, res, next);
     });
   });
 });
