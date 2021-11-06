@@ -64,7 +64,7 @@ describe("Given a getARobot function", () => {
     });
   });
 
-  describe("When Robot.findById resolves to K9", () => {
+  describe("And When it receives a request and response, and Robot.findById resolves to K9", () => {
     test("Then it should invoke res.json with K9", async () => {
       const idRobot = 7;
       const k9 = {
@@ -94,6 +94,26 @@ describe("Given a getARobot function", () => {
       await getARobot(req, res);
 
       expect(res.json).toHaveBeenCalledWith(k9);
+    });
+  });
+
+  describe("And When it receives a next function too, and the promise Robot.findById rejects", () => {
+    test("Then it should invoke the next function with the rejected error", async () => {
+      const error = {};
+      const next = jest.fn();
+      Robot.findById = jest.fn().mockRejectedValue(error);
+      const req = {
+        params: {
+          id: 7,
+        },
+      };
+      const res = {};
+
+      await getARobot(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+      expect(error.code).toBe(400);
     });
   });
 });

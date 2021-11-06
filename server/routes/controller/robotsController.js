@@ -12,12 +12,11 @@ const getARobot = async (req, res, next) => {
     if (searchedRobot) {
       res.json(searchedRobot); // test to be called: receives a req + res with .json + next.
     } else {
-      const error = new Error("Error. Peligro. Robot no encontrado."); // test
+      const error = new Error("Error. Peligro. Robot no encontrado."); // test -in the end
       error.code = 404;
       next(error);
     }
   } catch (error) {
-    // test
     error.code = 400;
     next(error); // test
   }
