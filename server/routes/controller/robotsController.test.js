@@ -3,7 +3,7 @@ const { getRobots, getARobot } = require("./robotsController");
 const Robot = require("../../../database/models/robot");
 
 describe("Given a getRobots function", () => {
-  describe("When it receives a res object, and inherits a given Robot model", () => {
+  describe("When it receives a res object", () => {
     test("Then it should invoke the res's method json", async () => {
       const robots = [
         {
@@ -44,7 +44,7 @@ describe("Given a getRobots function", () => {
 });
 
 describe("Given a getARobot function", () => {
-  describe("When it receives a request with an id of 7, a res object, a next function and inherits a given Robot model", () => {
+  describe("When it receives a request with an id of 7, a res object, a next function", () => {
     test("Then it should invoke Robot.findById with the id 7", async () => {
       Robot.findById = jest.fn().mockResolvedValue({});
       const idRobot = 7;
@@ -61,6 +61,39 @@ describe("Given a getARobot function", () => {
       await getARobot(req, res, next);
 
       expect(Robot.findById).toHaveBeenCalledWith(idRobot);
+    });
+  });
+
+  describe("When Robot.findById resolves to K9", () => {
+    test("Then it should invoke res.json with K9", async () => {
+      const idRobot = 7;
+      const k9 = {
+        idRobot,
+        name: "K-9",
+        imageUrl:
+          "https://www.herocollector.com/Content/ArticleImages/277e031b-e366-43b3...",
+        specifications: {
+          speed: 6,
+          toughness: 9,
+          creationDate: new Date("1977-06-05T16:21:22.000+00:00"),
+        },
+      };
+
+      Robot.findById = jest.fn().mockResolvedValue(k9);
+
+      const req = {
+        params: {
+          idRobot,
+        },
+      };
+
+      const res = {
+        json: jest.fn(),
+      };
+
+      await getARobot(req, res);
+
+      expect(res.json).toHaveBeenCalledWith(k9);
     });
   });
 });
