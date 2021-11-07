@@ -170,4 +170,34 @@ describe("Given a createRobot function", () => {
       expect(Robot.create).toHaveBeenCalledWith(k9);
     });
   });
+
+  describe("And When it receives a request and response, and Robot.create resolves to K9", () => {
+    test("Then it should invoke res.json with K9", async () => {
+      const k9 = {
+        _id: 5,
+        name: "K-9",
+        imageUrl:
+          "https://www.herocollector.com/Content/ArticleImages/277e031b-e366-43b3...",
+        specifications: {
+          speed: 6,
+          toughness: 9,
+          creationDate: new Date("1977-06-05T16:21:22.000+00:00"),
+        },
+      };
+
+      Robot.create = jest.fn().mockResolvedValue(k9);
+
+      const req = {
+        body: k9,
+      };
+
+      const res = {
+        json: jest.fn(),
+      };
+
+      await createRobot(req, res);
+
+      expect(res.json).toHaveBeenCalledWith(k9);
+    });
+  });
 });
