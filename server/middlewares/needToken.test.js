@@ -30,10 +30,12 @@ describe("Given the needToken function", () => {
       const res = {};
 
       const next = jest.fn();
-
+      const error = new Error(
+        "Error. Peligro. El token introducido es inservible. Introducir el token correcto. I'm a teapot."
+      );
       needToken(req, res, next);
 
-      expect(next).toHaveBeenCalled();
+      expect(next).toHaveBeenCalledWith(error);
     });
   });
 });
