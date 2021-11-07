@@ -22,4 +22,16 @@ const getARobot = async (req, res, next) => {
   }
 };
 
-module.exports = { getRobots, getARobot };
+const createRobot = async (req, res, next) => {
+  try {
+    const robot = req.body;
+    const newRobot = await Robot.create(robot);
+    res.json(newRobot);
+  } catch (error) {
+    error.code = 420;
+    error.message = "Error. Peligro. Enhance your calm.";
+    next(error);
+  }
+};
+
+module.exports = { getRobots, getARobot, createRobot };
