@@ -200,4 +200,35 @@ describe("Given a createRobot function", () => {
       expect(res.json).toHaveBeenCalledWith(k9);
     });
   });
+
+  describe("And it receives a next function too, and the promise Robot.create rejects", () => {
+    test("Then it should invoke the next function with the error", async () => {
+      const error = {};
+      const k9 = {
+        _id: 5,
+        name: "K-9",
+        imageUrl:
+          "https://www.herocollector.com/Content/ArticleImages/277e031b-e366-43b3...",
+        specifications: {
+          speed: 6,
+          toughness: 9,
+          creationDate: new Date("1977-06-05T16:21:22.000+00:00"),
+        },
+      };
+
+      const next = jest.fn();
+      Robot.create = jest.fn().mockRejectedValue(error);
+
+      const req = {
+        body: k9,
+      };
+      const res = {};
+
+      await createRobot(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error);
+      expect(error).toHaveProperty("code");
+      expect(error.code).toBe(420);
+    });
+  });
 });
