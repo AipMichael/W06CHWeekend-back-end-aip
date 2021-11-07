@@ -8,18 +8,30 @@ const getRobots = async (req, res) => {
 const getARobot = async (req, res, next) => {
   const { idRobot } = req.params;
   try {
-    const searchedRobot = await Robot.findById(idRobot); // test: receives a req.id + res + next.
+    const searchedRobot = await Robot.findById(idRobot);
     if (searchedRobot) {
-      res.json(searchedRobot); // test to be called: receives a req + res with .json + next.
+      res.json(searchedRobot);
     } else {
-      const error = new Error("Error. Peligro. Robot no encontrado."); // test -in the end
+      const error = new Error("Error. Peligro. Robot no encontrado.");
       error.code = 404;
       next(error);
     }
   } catch (error) {
     error.code = 400;
-    next(error); // test
+    next(error);
   }
 };
 
-module.exports = { getRobots, getARobot };
+const createRobot = async (req, res, next) => {
+  try {
+    const robot = req.body;
+    const newRobot = await Robot.create(robot);
+    res.json(newRobot);
+  } catch (error) {
+    error.code = 420;
+    error.message = "Error. Peligro. Enhance your calm.";
+    next(error);
+  }
+};
+
+module.exports = { getRobots, getARobot, createRobot };
