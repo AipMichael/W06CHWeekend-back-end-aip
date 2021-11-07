@@ -1,5 +1,5 @@
 /* const { restart } = require("nodemon"); */
-const { getRobots, getARobot } = require("./robotsController");
+const { getRobots, getARobot, createRobot } = require("./robotsController");
 const Robot = require("../../../database/models/robot");
 
 describe("Given a getRobots function", () => {
@@ -136,6 +136,38 @@ describe("Given a getARobot function", () => {
       await getARobot(req, res, next);
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+describe("Given a createRobot function", () => {
+  describe("When it receives a valid request with a K9 robot", () => {
+    test("Then it should invoke Robot.create with the K9 robot", async () => {
+      Robot.create = jest.fn().mockResolvedValue({});
+      const k9 = {
+        _id: 5,
+        name: "K-9",
+        imageUrl:
+          "https://www.herocollector.com/Content/ArticleImages/277e031b-e366-43b3...",
+        specifications: {
+          speed: 6,
+          toughness: 9,
+          creationDate: new Date("1977-06-05T16:21:22.000+00:00"),
+        },
+      };
+      const req = {
+        body: k9,
+      };
+
+      const res = {
+        json: () => {},
+      };
+
+      const next = () => {};
+
+      await createRobot(req, res, next);
+
+      expect(Robot.create).toHaveBeenCalledWith(k9);
     });
   });
 });
