@@ -1,4 +1,4 @@
-const Robot = require("../../../database/models/robot");
+const Robot = require("../../database/models/robot");
 
 const getRobots = async (req, res) => {
   const robots = await Robot.find();
