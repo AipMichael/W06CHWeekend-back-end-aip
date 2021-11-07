@@ -1,4 +1,3 @@
-/* const { restart } = require("nodemon"); */
 const { getRobots, getARobot, createRobot } = require("./robotsController");
 const Robot = require("../../database/models/robot");
 
