@@ -6,7 +6,7 @@ const User = require("../../database/models/user");
 
 const logIn = async (req, res, next) => {
   const { username, password } = req.body;
-  const user = await User.findOne(username);
+  const user = await User.findOne({ username });
   if (!user) {
     const error = new Error("Error. Peligro. Silencio. No hay banda.");
     error.code = 401;
