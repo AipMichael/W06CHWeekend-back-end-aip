@@ -6,9 +6,9 @@ const notFoundErrorHandler = (req, res) => {
   });
 };
 
-const generalErrorHandler = (error, req, res) => {
+const generalErrorHandler = (error, req, res, next) => {
   // TODO aunque ahora no lo usamos, para el test tenemos que poner "next"
-  debug("Error. Peligro. Ha habido un error: ", error.message);
+  debug(`Error. Peligro. Ha habido un error: ${error.message}`);
   const message = error.code
     ? error.message
     : "Error. Peligro. Ha habido un pete general.";

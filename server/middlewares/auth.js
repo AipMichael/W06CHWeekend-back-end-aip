@@ -4,7 +4,7 @@ const debug = require("debug")("robots:server");
 const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
-  const authHeader = req.headers("Authorization");
+  const authHeader = req.header("Authorization");
   if (!authHeader) {
     debug(chalk.red("Error. Peligro. No existes."));
     const error = new Error("Error. Peligro. No existes.");
