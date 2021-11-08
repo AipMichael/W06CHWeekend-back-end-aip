@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const logInController = require("../controller/logInController");
 
 const router = express.Router();
 
@@ -12,5 +13,7 @@ router.get("/", async () => {
     password: await bcrypt.hash("soyRobot45!", 10),
   });
 });
+
+router.post("/login", logInController);
 
 module.exports = router;
