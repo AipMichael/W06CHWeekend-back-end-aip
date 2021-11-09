@@ -24,6 +24,6 @@ const robotSchema = new Schema({
   },
 });
 
-const Robot = model("Robot", robotSchema);
+const Robot = model("Robot", robotSchema, "robots");
 
 module.exports = Robot;

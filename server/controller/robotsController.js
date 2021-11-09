@@ -41,10 +41,12 @@ const updateRobot = async (req, res, next) => {
     debug(chalk.cyanBright("Atención. Estamos modificando."));
     const robot = req.body;
     const { _id } = req.body;
-    const changedRobot = await Robot.findByIdAndUpdate(_id, robot, {
+    console.log("AAAAAA", _id, "BB0BBB", req.body);
+    console.log("CCCCCC", await Robot.findByIdAndUpdate(_id));
+    await Robot.findByIdAndUpdate(_id, req.body, {
       runValidators: true,
     });
-    res.json(changedRobot);
+    res.json(robot);
   } catch (error) {
     error.code = 400;
     error.message = "Error. Peligro. Nada ha cambiado.";
