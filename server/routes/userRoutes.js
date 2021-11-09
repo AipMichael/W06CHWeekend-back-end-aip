@@ -1,6 +1,8 @@
 const express = require("express");
 /* const bcrypt = require("bcrypt"); */
+const { validate } = require("express-validation");
 const logInController = require("../controller/logInController");
+const loginSchema = require("../Schema/userSchemas");
 
 const router = express.Router();
 
@@ -13,6 +15,6 @@ const router = express.Router();
   });
 }); */
 
-router.post("/login", logInController);
+router.post("/login", validate(loginSchema, {}, {}), logInController);
 
 module.exports = router;
