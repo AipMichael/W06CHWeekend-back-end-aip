@@ -1,6 +1,8 @@
 const { getRobots, getARobot, createRobot } = require("./robotsController");
 const Robot = require("../../database/models/robot");
 
+jest.mock("../../database/models/robot");
+
 describe("Given a getRobots function", () => {
   describe("When it receives a res object", () => {
     test("Then it should invoke the res's method json", async () => {
