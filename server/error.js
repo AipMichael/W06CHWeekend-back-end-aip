@@ -1,4 +1,5 @@
 const debug = require("debug")("robots:errors");
+const { ValidationError } = require("express-validation");
 
 const notFoundErrorHandler = (req, res) => {
   res.status(404).json({
@@ -7,7 +8,10 @@ const notFoundErrorHandler = (req, res) => {
 };
 
 const generalErrorHandler = (error, req, res, next) => {
-  // TODO aunque ahora no lo usamos, para el test tenemos que poner "next"
+  if (error instanceof ValidationError) {
+    error.code = 401;
+    error.message = "Error. Peligro. Shema de huevo.";
+  }
   debug(`Error. Peligro. Ha habido un error: ${error.message}`);
   const message = error.code
     ? error.message

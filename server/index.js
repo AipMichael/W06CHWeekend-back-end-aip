@@ -8,6 +8,7 @@ const robotsRoutes = require("./routes/robotsRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
@@ -26,7 +27,6 @@ const initializeServer = (port) => {
   });
 };
 
-app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/robots", robotsRoutes);
