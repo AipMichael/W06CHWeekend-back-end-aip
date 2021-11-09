@@ -1,3 +1,5 @@
+const debug = require("debug")("robots:controller");
+const chalk = require("chalk");
 const Robot = require("../../database/models/robot");
 
 const getRobots = async (req, res) => {
@@ -34,4 +36,20 @@ const createRobot = async (req, res, next) => {
   }
 };
 
-module.exports = { getRobots, getARobot, createRobot };
+const updateRobot = async (req, res, next) => {
+  try {
+    debug(chalk.cyanBright("Atención. Estamos modificando."));
+    const robot = req.body;
+    const { _id } = req.body;
+    const changedRobot = await Robot.findByIdAndUpdate(_id, robot, {
+      runValidators: true,
+    });
+    res.json(changedRobot);
+  } catch (error) {
+    error.code = 400;
+    error.message = "Error. Peligro. Nada ha cambiado.";
+    next(error);
+  }
+};
+
+module.exports = { getRobots, getARobot, createRobot, updateRobot };
