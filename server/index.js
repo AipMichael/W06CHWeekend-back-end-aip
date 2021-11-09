@@ -8,9 +8,6 @@ const robotsRoutes = require("./routes/robotsRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
-app.use(morgan("dev"));
-app.use(cors());
-app.use(express.json());
 
 const initializeServer = (port) => {
   const server = app.listen(port, () => {
@@ -27,10 +24,12 @@ const initializeServer = (port) => {
   });
 };
 
+app.use(cors());
 app.use(express.json());
+app.use(morgan("dev"));
 
-app.use("/robots", robotsRoutes);
 app.use("/users", userRoutes);
+app.use("/robots", robotsRoutes);
 
 app.use(notFoundErrorHandler);
 app.use(generalErrorHandler);
