@@ -27,28 +27,31 @@ const getARobot = async (req, res, next) => {
 const createRobot = async (req, res, next) => {
   try {
     const robot = req.body;
+    robot.user = req.userId;
     const newRobot = await Robot.create(robot);
     res.status(201).json(newRobot);
-  } catch (error) {
+  } catch {
+    const error = new Error("Robot not found");
     error.code = 420;
-    error.message = "Error. Peligro. Enhance your calm.";
+    error.message = "Error. Peligro. Post-Enhance your calm. ";
     next(error);
   }
 };
 
 const updateRobot = async (req, res, next) => {
+  // el ha hecho la promesa fuera, como el getARobot
   try {
     debug(chalk.cyanBright("Atención. Estamos modificando."));
     const robot = req.body;
     const { _id } = req.body;
-    console.log("AAAAAA", _id, "BB0BBB", req.body);
-    console.log("CCCCCC", await Robot.findByIdAndUpdate(_id));
+
     await Robot.findByIdAndUpdate(_id, req.body, {
       runValidators: true,
+      new: true,
     });
     res.json(robot);
   } catch (error) {
-    error.code = 400;
+    error.code = 404;
     error.message = "Error. Peligro. Nada ha cambiado.";
     next(error);
   }

@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", auth, getRobots);
 router.get("/:idRobot", auth, getARobot);
-router.post("/create", auth, createRobot);
+router.post("/create", /* auth,  */ createRobot);
 router.put("/update", /* auth, */ updateRobot);
 
 module.exports = router;

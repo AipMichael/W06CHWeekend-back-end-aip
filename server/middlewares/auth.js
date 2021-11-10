@@ -23,9 +23,8 @@ const auth = (req, res, next) => {
         req.userId = user.id;
         next();
       } catch (error) {
-        error.message(
-          "Error. Peligro. Para enviar este token, mejor no enviar nada."
-        );
+        error.message =
+          "Error. Peligro. Para enviar este token, mejor no enviar nada.";
         error.code = 401;
         next(error);
       }
